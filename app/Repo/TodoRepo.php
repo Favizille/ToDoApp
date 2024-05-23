@@ -13,7 +13,18 @@ class TodoRepo{
 
     // This function will be passed on the render method on the todo component because it has pagination
     public function fetchAll(){
-        $todos = auth()->user()->todos()->paginate(10);
+        $todos = auth()->user()->todos()->paginate(3);
         return $todos;
+    }
+
+    public function getTodo($todoId){
+        return auth()->user()->todos()->find($todoId);
+    }
+
+    public function update($todoId, $editedTodo){
+        $todo = $this->getTodo($todoId);
+        return $todo->update([
+            "todo" => $editedTodo
+        ]);
     }
 }
